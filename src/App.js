@@ -5,7 +5,7 @@ class Timer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      time: 0
+      time: props.start
     };
   }
 
@@ -36,7 +36,8 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Timer />
+        <Timer start="10" />
+        <Timer start="0" />
       </div>
     );
   }
