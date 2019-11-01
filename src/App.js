@@ -1,32 +1,29 @@
 import React, { Component } from "react";
 import "./App.css";
 
-class Timer extends Component {
-  constructor(props) {
-    super(props);
+class OnClick extends Component {
+  constructor() {
+    super();
     this.state = {
-      time: props.start
+      lamp: false
     };
   }
 
-  componentDidMount() {
-    this.timerStart = setInterval(() => this.incerease(), 1000);
-  }
-
-  componentWillUnmount() {
-    clearInterval(this.timerStart);
-  }
-
-  incerease() {
+  handleClickLamp = () => {
     this.setState({
-      time: parseInt(this.state.time) + 1
+      lamp: !this.state.lamp
     });
-  }
+  };
 
   render() {
     return (
       <div>
-        <p> {this.state.time} detik </p>
+        <button onClick={() => this.handleClickLamp()}>
+          {this.state.lamp ? "ON" : "OFF"}
+        </button>
+        <p>
+          {this.state.lamp ? "Kondisi Lampu Menyala" : "Kondisi Lampu Mati"}
+        </p>
       </div>
     );
   }
@@ -36,8 +33,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Timer start="10" />
-        <Timer start="0" />
+        <OnClick />
       </div>
     );
   }
