@@ -1,39 +1,41 @@
 import React, { Component } from "react";
 import "./App.css";
 
-class OnClick extends Component {
-  constructor() {
-    super();
+import List from "./Components/List";
+
+class App extends Component {
+  constructor(props) {
+    super(props);
     this.state = {
-      lamp: false
+      inputTodo: "",
+      todoItems: []
     };
   }
 
-  handleClickLamp = () => {
+  handleSubmit = async event => {
+    event.preventDefault();
+    await this.setState({
+      todoItems: [...this.state.todoItems, this.state.inputTodo],
+      inputTodo: ""
+    });
+    console.log(this.state.todoItems);
+  };
+
+  handleInput = event => {
     this.setState({
-      lamp: !this.state.lamp
+      inputTodo: event.target.value
     });
   };
 
   render() {
     return (
       <div>
-        <button onClick={() => this.handleClickLamp()}>
-          {this.state.lamp ? "ON" : "OFF"}
-        </button>
-        <p>
-          {this.state.lamp ? "Kondisi Lampu Menyala" : "Kondisi Lampu Mati"}
-        </p>
-      </div>
-    );
-  }
-}
+        <form onSubmit={this.handleSubmit}>
+          <input onChange={this.handleInput} value={this.state.inputTodo} />
+          <button> ADD </button>
+        </form>
 
-class App extends Component {
-  render() {
-    return (
-      <div>
-        <OnClick />
+        <List todo={this.state.todoItems} />
       </div>
     );
   }
