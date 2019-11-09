@@ -20,3 +20,12 @@
 .App-link {
   color: #09d3ac;
 }
+
+body button {
+  padding: 10px 20px;
+  margin: 10px;
+  font-weight: bold;
+  border-radius: 10px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}

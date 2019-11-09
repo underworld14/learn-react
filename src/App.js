@@ -1,41 +1,49 @@
 import React, { Component } from "react";
 import "./App.css";
 
-import List from "./Components/List";
+import HighScore from "./Components/HighScore";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      inputTodo: "",
-      todoItems: []
+      count: 0,
+      overTen: false
     };
   }
 
-  handleSubmit = async event => {
-    event.preventDefault();
-    await this.setState({
-      todoItems: [...this.state.todoItems, this.state.inputTodo],
-      inputTodo: ""
-    });
-    console.log(this.state.todoItems);
+  handleclick = () => {
+    this.setState({ count: this.state.count + 1 });
   };
 
-  handleInput = event => {
-    this.setState({
-      inputTodo: event.target.value
-    });
+  handleReset = () => {
+    this.setState({ count: 0, overTen: false });
   };
+
+  componentDidUpdate(props, state) {
+    if (
+      this.state.count > 10 &&
+      this.state.count !== state.count &&
+      !this.state.overTen
+    ) {
+      this.setState({ overTen: true });
+    }
+  }
 
   render() {
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
-          <input onChange={this.handleInput} value={this.state.inputTodo} />
-          <button> ADD </button>
-        </form>
+        <div>
+          <h1> You Have Clicked {this.state.count} times </h1>
+          <HighScore overTen={this.state.overTen} />
 
-        <List todo={this.state.todoItems} />
+          <button variant="primary" onClick={this.handleclick}>
+            Click Me
+          </button>
+          <button variant="warning" onClick={this.handleReset}>
+            Reset
+          </button>
+        </div>
       </div>
     );
   }
